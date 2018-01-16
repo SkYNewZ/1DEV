@@ -15,6 +15,6 @@ $ python3 main.py
 ```
 Enjoy! :wink:
 
-## Lience
+## Licence
 [LEMAIRE Quentin](https://github.com/SkYNewZ)
 [DEBUISSON Jean](https://github.com/Duffy59)
