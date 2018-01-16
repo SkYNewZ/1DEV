@@ -1,0 +1,105 @@
+# coding=utf-8
+import pygame, sys, os
+from pygame.locals import *
+from random import *
+from globales import *
+import random
+
+def spawn_npc(x, y, init_npc, npc_x, npc_y, direction_chosie, idx):
+
+	reponse = []
+
+
+	#spawn initial
+	if init_npc == 0:
+		fenetre.blit(npc_1, (npc_x-(x-1500//2), npc_y-(y-825//2)))
+		init_npc = 1
+		reponse = [init_npc, npc_x, npc_y, direction_chosie, idx, direction_chosie, idx]
+		return reponse
+
+
+	#une fois le spawn initial fait, choix d'une direction et test si possible
+	if init_npc == 1:
+		tab_direction = [0, 1, 2, 3]
+		random.shuffle(tab_direction)
+		direction_chosie = tab_direction[idx]
+
+		#up
+		if direction_chosie == 0:
+			npc_y -= speed
+		#down
+		if direction_chosie == 1:
+			npc_y += speed
+		#left
+		if direction_chosie == 2:
+			npc_x -= speed
+		#right
+		if direction_chosie == 3:
+			npc_x += speed
+
+		#si pas possible renvoie juste les valeurs
+		if matrice[(npc_y//75)+4][(npc_x//75)+10] != 4:
+
+			#si pas posible, chaque valeur reprend sa veleur initiale
+			#up
+			if direction_chosie == 0:
+				npc_y += speed
+			#down
+			if direction_chosie == 1:
+				npc_y -= speed
+			#left
+			if direction_chosie == 2:
+				npc_x += speed
+			#right
+			if direction_chosie == 3:
+				npc_x -= speed
+
+
+
+			reponse = [init_npc, npc_x, npc_y, direction_chosie, idx, direction_chosie, idx]
+			return reponse
+
+		#si c'est possible de déplacer, il place le npc avec ses nouvelles coordonées
+		elif matrice[(npc_y//75)+5][(npc_x//75)+10] == 4:
+			fenetre.blit(npc_1, (npc_x-(x-1500//2), npc_y-(y-825//2)))
+			init_npc = 2
+
+
+	#enfin si la direction a été choisi avant, il continue dans cette direction, toujours en testant si possible. Sinon, il reviens en arrière
+	if init_npc == 2:
+		#up
+		if direction_chosie == 0:
+			npc_y -= speed
+		#down
+		if direction_chosie == 1:
+			npc_y += speed
+		#left
+		if direction_chosie == 2:
+			npc_x -= speed
+		#right
+		if direction_chosie == 3:
+			npc_x += speed
+
+		if matrice[(npc_y//75)+4][(npc_x//75)+10] != 4:
+
+			#si pas posible, chaque valeur reprend sa veleur initiale
+			#up
+			if direction_chosie == 0:
+				npc_y += speed
+			#down
+			if direction_chosie == 1:
+				npc_y -= speed
+			#left
+			if direction_chosie == 2:
+				npc_x += speed
+			#right
+			if direction_chosie == 3:
+				npc_x -= speed
+
+				
+			init_npc = 1
+			reponse = [init_npc, npc_x, npc_y, direction_chosie, idx, direction_chosie, idx]
+			return reponse
+
+		elif matrice[(npc_y//75)+5][(npc_x//75)+10] == 4:
+			fenetre.blit(npc_1, (npc_x-(x-1500//2), npc_y-(y-825//2)))
